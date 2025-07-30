@@ -50,7 +50,8 @@
 
 
 const page = async () => {
-  const res = await fetch('http://127.0.0.1:3000/api/getprices');
+const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getprices`);
+
   const data = await res.json();
 
   // const itemprices = data || [];
