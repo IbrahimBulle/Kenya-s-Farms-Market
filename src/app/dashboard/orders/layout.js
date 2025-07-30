@@ -1,8 +1,8 @@
-import BuyerNavbar from "@/components/ui/BuyerNavbar"
+import Navbar from "@/components/ui/Navbar"
 const layout = ({children}) => { 
   return (
     <>
-    <BuyerNavbar/>
+    <Navbar/>
      {children}
     </>
    

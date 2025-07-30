@@ -1,9 +1,12 @@
 'use client'
 export const dynamic = 'force-dynamic';
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 
 const AddProductPage = () => {
+  
+  const fileInputRef = useRef(null)
+
   const [form, setForm] = useState({
     name: '',
     category: '',
@@ -14,7 +17,7 @@ const AddProductPage = () => {
     image: null,
   })
 
-  const categories = ['Maize', 'Beans', 'Tomatoes', 'Mangoes']
+  const categories = ['fruits', 'vegatables', 'cereals', 'Cash crops']
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -32,6 +35,16 @@ const AddProductPage = () => {
     )
     setEmail(emailValue)
   }, [])
+  
+  useEffect(() => {
+  if (email) {
+    setForm((prevForm) => ({
+      ...prevForm,
+      email,
+    }));
+  }
+}, [email])
+
 
 console.log(email)
   const handleFileChange = (e) => {
@@ -58,6 +71,11 @@ console.log(email)
     if (res.ok) {
       alert('Product added!')
       setForm({ name: '', category: '',quantity:'', price: '', description: '',email:'', image: null })
+        if (fileInputRef.current) {
+    fileInputRef.current.value = null // ⬅️ Clear actual file input
+  }
+      window.location.reload()
+
     } else {
       alert('Error adding product')
     }
@@ -82,7 +100,7 @@ console.log(email)
 
       <textarea name="description" placeholder="Description" className="p-2 border w-full" onChange={handleChange} value={form.description} />
 
-      <input type="file" required accept="image/*" onChange={handleFileChange} className='bg-gray-400 py-3 px-2 rounded-2xl mr-2' />
+      <input  ref={fileInputRef} type="file" required accept="image/*" onChange={handleFileChange} className='bg-gray-400 py-3 px-2 rounded-2xl mr-2' />
 
       {form.image && (
         <img src={URL.createObjectURL(form.image)} alt="Preview" className="w-32 h-32 object-cover rounded-md" />

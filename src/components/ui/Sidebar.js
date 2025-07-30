@@ -5,12 +5,13 @@ import { usePathname } from "next/navigation"
 const Sidebar = () => {
   const list=[
      {name:'Add Products',path:'add-products'},
+     { name:'My products',path:'/my-products'},
     { name:'products',path:'/products'},
     { name:'Prices',path:'prices'},
   { name:'Orders',path:'orders'}]
   const pathname = usePathname()
   return (
-    <div className="w-[100%] bg-green-900 h-[92.5vh] overflow-hidden py-5 rounded-2xl">
+    <div className="w-[100%] bg-green-900 h-[100vh]  overflow-hidden py-5 rounded-2xl">
       <ul>
      {list.map( (item,index)=>{
       const active = pathname===`/dashboard/${item.path}`

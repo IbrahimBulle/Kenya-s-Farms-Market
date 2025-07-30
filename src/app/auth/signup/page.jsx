@@ -67,7 +67,7 @@ const handleSubmit =async (e)=>{
     county:"",
     role:""
 })
-    router.push('/login')
+    router.push('/auth/login')
 
   } catch (error) {
     console.error(e);

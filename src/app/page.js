@@ -9,7 +9,7 @@ const page = async() => {
   }else if(role==='Farmer'){
     redirect('/dashboard')
   }else{
-    redirect('/buyer')
+     redirect('/buyer')
   }
   return (
     <h1>page</h1>
