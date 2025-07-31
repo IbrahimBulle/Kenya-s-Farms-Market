@@ -65,7 +65,7 @@ const page = async () => {
 
   // Filter only orders that match the decoded email
   const orders = (data.orders || []).filter(order => order.product_id.split('/')[0] === email)
-
+   console.log(orders);
   return (
     <div className="relative overflow-x-scroll shadow-md sm:rounded-lg p-4">
       <div className="mb-4 p-4 bg-blue-50 border border-blue-300 text-blue-800 rounded-md dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700">

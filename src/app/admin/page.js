@@ -60,9 +60,7 @@ const Page = () => {
 //     }
 //   }
 
-console.log("Users data:", users.map((user)=>{
-    console.log(user);
-}));
+
 
   return (
     <div className="relative overflow-x-scroll shadow-md sm:rounded-lg p-4">

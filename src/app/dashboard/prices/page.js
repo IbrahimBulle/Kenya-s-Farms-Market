@@ -1,56 +1,19 @@
-// 'use client'
-
-// import { useEffect, useState } from 'react'
-
-// const Page = () => {
-//   const [data, setData] = useState([])
-
-//   useEffect(() => {
-//     fetch('/api/getprices')
-//       .then((res) => res.json())
-//       .then(setData)
-//       .catch(console.error)
-//   }, [])
-
-//   return (
-//     <div className="relative overflow-x-scroll shadow-md sm:rounded-lg p-4">
-//       <h2 className="text-xl font-semibold mb-4">Farm Price Table</h2>
-//       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
-//         <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
-//           <tr>
-//             <th className="px-6 py-3">Product Name</th>
-//             <th className="px-6 py-3">Category</th>
-//             {[...Array(7)].map((_, i) => (
-//               <th key={i} className="px-4 py-3">Day {i + 1}</th>
-//             ))}
-//             <th className="px-6 py-3">Average</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {data.map((item) => (
-//             <tr
-//               key={item._id}
-//               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-//             >
-//               <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{item.name}</td>
-//               <td className="px-6 py-4">{item.category}</td>
-//               {item.daily.map((price, idx) => (
-//                 <td key={idx} className="px-4 py-4">${price}</td>
-//               ))}
-//               <td className="px-6 py-4 font-semibold text-green-700">${item.average.toFixed(2)}</td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   )
-// }
-
-// export default Page
-
 'use client'
 
 import { useEffect, useState } from 'react'
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
+
+// Register Chart.js components
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 const Page = () => {
   const [data, setData] = useState([])
@@ -62,9 +25,40 @@ const Page = () => {
       .catch(console.error)
   }, [])
 
+  // Prepare chart data
+  const chartData = {
+    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+    datasets: data.map((item, index) => ({
+      label: item.product,
+      data: item.prices || [],
+      fill: false,
+      borderColor: `hsl(${index * 50}, 70%, 50%)`,
+      tension: 0.3
+    }))
+  }
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+
   return (
     <div className="relative overflow-x-scroll shadow-md sm:rounded-lg p-4">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <h2 className="text-xl font-semibold mb-4">Farm Price Table</h2>
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-10">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-6 py-3">#</th>
@@ -92,6 +86,12 @@ const Page = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Chart */}
+      <div className="mt-10">
+        <h3 className="text-lg font-semibold mb-4">Price Trends (Last 5 Days)</h3>
+        <Line data={chartData} options={chartOptions} />
+      </div>
     </div>
   )
 }

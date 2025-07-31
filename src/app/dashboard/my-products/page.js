@@ -16,7 +16,7 @@ const page = async() => {
   })
    const { resources } = await cloudinary.search
   .expression(`folder:${email}`) 
-  .max_results(30) // Optional: limit the number of results per call
+  .max_results(30) 
   .execute();
   return (
     <div className="flex flex-wrap gap-4">
