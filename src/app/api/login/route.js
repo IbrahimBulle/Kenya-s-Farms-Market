@@ -10,20 +10,21 @@ export const POST = async (params) => {
 
     await connectToDB()
     const user = await User.findOne({ email })
-    if (!user) {
-      return NextResponse.json({
-        success: false,
-        message: 'User not found'
-      })
-    }
+  if (!user) {
+  return NextResponse.json(
+    { success: false, message: 'User not found' },
+    { status: 404 }
+  )
+}
 
     const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) {
-      return NextResponse.json({
-        success: false,
-        message: 'Invalid password'
-      })
-    }
+
+   if (!isMatch) {
+  return NextResponse.json(
+    { success: false, message: 'Invalid password' },
+    { status: 401 }
+  )
+  }
 
     // Create a response and set cookies properly
     const response = NextResponse.json({

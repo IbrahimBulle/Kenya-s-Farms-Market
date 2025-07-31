@@ -6,7 +6,8 @@ import CardWithDelete from '@/components/ui/CardWithDelete'
 
 const page = async() => {
      
-    const email = await cookies().get('email')?.value
+    const cookie = await cookies()
+    const email =cookie.get('email')?.value
     console.log(email);
   cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,

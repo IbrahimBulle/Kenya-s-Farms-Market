@@ -29,7 +29,7 @@ const handleChange=(e)=>{
     [name]:value
   }))
 }
-
+console.log(formData);
 const handleSubmit =async (e)=>{
   e.preventDefault()
   for (const key in formData){
@@ -38,6 +38,11 @@ const handleSubmit =async (e)=>{
         return;
     }
 }
+ if (!/^[A-Za-z\s]+$/.test(formData.name)) {
+  alert("Name should only contain letters and spaces");
+  return;
+}
+
   if(formData.password !== formData.conPass ){
     alert('Passwords do no mach')
     return
@@ -144,10 +149,39 @@ console.log("formdata is submitted",formData)
     />
     <span className="text-black font-black">Buyer</span>
      </label>
+     
+      <label className="flex items-center gap-2 cursor-pointer">
+    <input
+      type="radio"
+      name="role"
+     value="Admin"
+     checked={formData.role === "Admin"}
+     onChange={handleChange}
+
+      className="border-2 border-green-600 text-black font-black"
+    />
+    <span className="text-black font-black">Admin</span>
+    </label>
     </div>
 
         <div className="flex gap-6 m-auto">
-          <input  type="submit" className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md" value="Cancel"/>
+          <button
+  type="button"
+  onClick={() =>
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      conPass: "",
+      county: "",
+      role: ""
+    })
+  }
+  className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md"
+>
+  Cancel
+</button>
+
           <input  type="submit" className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md" value="Submit"/>
         </div>
 

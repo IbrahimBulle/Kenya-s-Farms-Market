@@ -1,8 +1,8 @@
-import Navbar from "@/components/ui/Navbar"
+import AdminNavbar from "@/components/ui/Navbar"
 const layout = ({children}) => { 
   return (
     <>
-    <Navbar/>
+    <AdminNavbar/>
      {children}
     </>
    

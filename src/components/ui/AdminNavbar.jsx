@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-const Navbar = () => {
+const AdminNavbar = () => {
     const router= useRouter()
   useEffect(()=>{
      const cookie= document.cookie
      const match=cookie.match(/role=([^;]+)/)
      const role=match?.[1] || null
      console.log(role)
-     if(!role){
+   if(!role){
     router.push('/auth/login')
     
   }else if(role=='Farmer'){
@@ -26,7 +26,7 @@ const Navbar = () => {
  
   
   const handleLogout=()=>{
-  document.cookie='role=; Max-Age=0; path=/; email=;'
+  document.cookie='role=; Max-Age=0; path=/;'
   router.push('/auth/login')
 }
   return (
@@ -39,4 +39,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default AdminNavbar

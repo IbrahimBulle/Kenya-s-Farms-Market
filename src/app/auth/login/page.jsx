@@ -34,15 +34,28 @@ const handleChange=(e)=>{
       })
       const data = await res.json();
       console.log(data)
-      if(!res.ok){
-          console.log("failed to send data")
-          alert(data.error || "Failed to signup");
-        return;
-      }
-  
-    } catch (error) {
-      console.error(e);
+     if (!res.ok) {
+  if (res.status === 404) {
+    alert("User not found");
+  } else if (res.status === 401) {
+    alert("Incorrect password");
+  } else {
+    alert(data.error || "Failed to login");
+  }
+  return;
+}
+
+   if (data.role === 'Admin') {
+      router.push('/admin');
+    } else {
+      router.push('/dashboard');
     }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+    
     router.push('/dashboard')
   console.log("formdata is submitted",formDataLogin)
   }
@@ -77,8 +90,19 @@ const handleChange=(e)=>{
        
 
         <div className="flex gap-6 m-auto">
-          <input  type="submit" className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md" value="Cancel"/>
-          <input  type="submit" className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md" value="Login"/>
+          <button
+  type="button"
+  onClick={() =>
+    setformdataLogin({
+      email: '',
+      password: ''
+    })
+  }
+  className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md"
+>
+  Cancel
+</button>
+<input  type="submit" className="border-2 border-green-600 text-black font-black px-4 py-2 rounded-md" value="Login"/>
         </div>
 
         <p className="text-gray-500">Don't have an account?<span className="text-blue-700 font-semibold cursor-pointer hover:underline">

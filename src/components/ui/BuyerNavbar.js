@@ -14,8 +14,10 @@ const Navbar = () => {
    if(!role){
     router.push('/auth/login')
     
-  }else if(role!=='Farmer'){
-    router.push('/buyer')
+  }else if(role=='Farmer'){
+    router.push('/dashboard')
+  }else if(role =='Admin'){
+    router.push('/admin')
   }
   },[])
  
